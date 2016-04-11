@@ -179,10 +179,11 @@ class PTA_SUS_Public {
 
 	    $time_start_header = apply_filters( 'pta_sus_public_output', __('Start Time', 'pta_volunteer_sus'), 'time_start_header' );
         $time_end_header = apply_filters( 'pta_sus_public_output', __('End Time', 'pta_volunteer_sus'), 'time_end_header' );
-        $time_end_header = apply_filters( 'pta_sus_public_output', __('custom', 'pta_volunteer_sus'), 'time_end_header' );
 
         $open_spots_header = apply_filters( 'pta_sus_public_output', __('Open Spots', 'pta_volunteer_sus'), 'open_spots_header' );
+        
         $date_header = apply_filters( 'pta_sus_public_output', __('Date', 'pta_volunteer_sus'), 'date_header' );
+        
         $no_contact_message = apply_filters( 'pta_sus_public_output', __('No Event Chair contact info provided', 'pta_volunteer_sus'), 'no_contact_message' );
         $contact_label = apply_filters( 'pta_sus_public_output', __('Contact:', 'pta_volunteer_sus'), 'contact_label' );
 
