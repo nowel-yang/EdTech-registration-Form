@@ -90,18 +90,14 @@ class PTA_SUS_CSV_EXPORTER {
                     }
                     $i++;
                 }
-            // foreach ($key_array as $key) { // Outputs the column headers from the array keys
-            //     $csv .= '"' . $this->clean_csv($key) . '"';
-            //     if ($i < $num_keys) {
-            //         $csv .= ',';
-            //     }
-            //     $i++;
-            // }
                 $csv .= "\n";
             }
+
+            // If name is empty, do not output to csv file
             if( $data['Volunteer Name'] === 'empty' && $count > 2 ) {
                 break;
             }
+            
             $i = 1;
             $task = $data['Task/Item'];
             $date = $data['Task Date']; // Grab the date
