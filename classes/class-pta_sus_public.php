@@ -295,6 +295,21 @@ class PTA_SUS_Public {
                             } else {
                                 $is_hidden = $hidden;
                             }
+
+                            // To store start_time and end_time and display in signup sheet
+                            // This may cause problem if there's multiple tasks in one signup sheet
+                            $task_start_time;
+                            $task_end_time;
+                            $tasks = $this->data->get_tasks($sheet->id, "");
+                            $i = 0;
+                            foreach ($tasks AS $task) {
+                                if($i === 0) {
+                                    $task_start_time = $task->time_start;
+                                    $task_end_time = $task->time_end;
+                                }
+                                $i++;
+                            }
+
                             $open_spots = ($this->data->get_sheet_total_spots($sheet->id) - $this->data->get_sheet_signup_count($sheet->id));
                             $sheet_args = array('sheet_id' => $sheet->id, 'date' => false, 'signup_id' => false, 'task_id' => false,);
                             $sheet_url = apply_filters('pta_sus_view_sheet_url', add_query_arg($sheet_args), $sheet);
@@ -306,8 +321,8 @@ class PTA_SUS_Public {
                                     <td class="column-title"><a href="'.esc_url($sheet_url).'">'.esc_html($sheet->title).'</a>'.$is_hidden.'</td>';
                             $return .= apply_filters( 'pta_sus_sheet_list_table_content_after_title', '', $sheet, $atts );
                             $return .= '<td class="column-date">'.(($sheet->first_date == '0000-00-00') ? esc_html( $ongoing_label ) : date_i18n(get_option('date_format'), strtotime($sheet->first_date))).'</td>
-                       					<td class="column-start-time">'.(($sheet->task_time_start) ? esc_html( $ongoing_label ) : date_i18n(get_option("time_format"), strtotime($sheet->task_time_start)) ).'</td>
-										<td class="column-end-time">'.(($sheet->time_end) ? esc_html( $ongloing_label ) : date_i18n(get_option("time_format"), strtotime($sheet->task_time_end)) ).'</td>
+                                        <td class="column-start-time">'.(("" == $task_start_time) ? esc_html($this->na_text) : date_i18n(get_option("time_format"), strtotime($task_start_time)) ).'</td>
+										<td class="column-end-time">'.(("" == $task_end_time) ? esc_html($this->na_text) : date_i18n(get_option("time_format"), strtotime($task_end_time)) ).'</td>
                                         <td class="column-open_spots">'.(int)$open_spots.'</td>
                                         <td class="column-view_link">'.(($open_spots > 0) ? '<a href="'.esc_url($sheet_url).'">'.esc_html( $view_signup_text ).' &raquo;</a>' : '&#10004; '.esc_html( $sheet_filled_text )).'</td>
                                 </tr>
